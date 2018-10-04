@@ -1,6 +1,6 @@
 # Introduction
 
-The following project is a chat bot for **Google Assistant**, designed to allow the user to line-up virtually. There will be two parties, customer and staff. Supposedly, customer and staff should have two separate apps. However, since this is a proof of concept, the two sides were combined into one. Think of this app as a virtual take-a-number system that you may have used at the the local butcher, passport office, vehicle licensing office, etc. For more information, take a look at this [report]("https://drive.google.com/open?id=1LMN8z4waEcevj58bm68-O8n9nNOXgGUA").
+The following project is a chat bot for **Google Assistant**, designed to allow the user to line-up virtually. There will be two parties, customer and staff. Supposedly, customer and staff should have two separate apps. However, since this is a proof of concept, the two sides were combined into one. Think of this app as a virtual take-a-number system that you may have used at the the local butcher, passport office, vehicle licensing office, etc. For more information, take a look at this [report](https://drive.google.com/open?id=1LMN8z4waEcevj58bm68-O8n9nNOXgGUA).
 
 It makes use of various Google technologies (e.g. **Firebase**, **Actions on Google**, **DialogFlow**) and a variety of `npm` packages (a list of which can be found in `functions/package.json`).
 
