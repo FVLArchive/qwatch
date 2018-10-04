@@ -7,24 +7,16 @@ import { Messages } from "./localization/messages";
 import { IActionHandlerPackage, IActionHandler } from "./actionHandlers/IActionHandler";
 import { Logging } from "./models/logger";
 import { WelcomeHandler } from "./actionHandlers/welcomeHandler";
-import { CustomerRemoveFromLineHandler, CustomerWaitInLineHandler, CustomerUpdatePhoneHandler, CustomerCheckLineHandler } from "./actionHandlers/customerHandler";
+import {
+    CustomerRemoveFromLineHandler,
+    CustomerWaitInLineHandler,
+    CustomerUpdatePhoneHandler,
+    CustomerCheckLineHandler
+} from "./actionHandlers/customerHandler";
 import { StaffAddToLineHandler, StaffNextInLineHandler, StaffRemoveFromLineHandler, StaffCheckLineHandler } from "./actionHandlers/staffHandlers";
 import { SelectStoreHandler } from "./actionHandlers/selectStoreHandler";
 import { AskForStoreHandler } from "./actionHandlers/askForStoreHandler";
 import { NotificationPermissionHandler } from "./actionHandlers/notificationPermissionHandler";
-
-// const FOLLOWUP_HANDLER_QUEUE_KEY: string = 'followup_intent';
-// const CUSTOMER_CHECK_LINE_FOLLOWUP_HANDLER_KEY: string = 'customer.checkLine_followup';
-// const CUSTOMER_WAIT_IN_LINE_FOLLOWUP_HANDLER_KEY: string = 'customer.waitInLine_followup';
-// const CUSTOMER_CHECK_CURRENT_LINE_FOLLOWUP_HANDLER_KEY: string = 'customer.checkCurrentLine_followup';
-// const CUSTOMER_REMOEV_FOMR_LINE_FOLLOWUP_HANDLER_KEY: string = 'customer.removeFromLine_followup';
-// const REORDER_QUICK_FOLLOWUP_HANDLER_KEY: string = 'order.reorderQuick_followup';
-// const ORDER_MENU_FOLLOWUP_HANDLER_KEY: string = 'order.orderMenu_followup';
-// const SIGNUP_RECALL_FOLLOWUP_HANDLER_KEY = 'signin_recall';
-// const SIGNIN_REQUIRED_MESSAGE: ISurfaceSwitchNotificationDetails = {
-// 	message: Messages.welcomeNotSignedInSurfaceSwitchRequiredNotificationMessage(),
-// 	notificationMessage: Messages.welcomeNotSignedInSurfaceSwitchRequiredNotificationMessage()
-// };
 
 export class ActionHandlers {
     /** A Map of handlers that are invoked by DialogflowApp when it receives an action string from an intent invocation. */
