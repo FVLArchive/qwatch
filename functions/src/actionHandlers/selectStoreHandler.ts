@@ -14,6 +14,7 @@ export class SelectStoreHandler extends BaseHandler {
             // if store exists
             if (index > -1) {
                 const storeName = stores[index].Name;
+                // update current store id
                 this.package.app.userStorage[STORE_ID_KEY] = storeid;
                 responseBuilder.addMessages(Messages.storeSet(storeName));
                 responseBuilder.addSuggestions({ title: Messages.sgnCheckLine() });

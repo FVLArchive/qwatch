@@ -1,7 +1,7 @@
-import { DialogflowApp } from "actions-on-google";
-import { UserInfo } from "../models/userInfo";
-import { ISource } from "../dataSources/source/source";
-import { ResponseType } from "../models/IResponseBuilder";
+import { DialogflowApp } from 'actions-on-google';
+import { UserInfo } from '../models/userInfo';
+import { ISource } from '../dataSources/source/source';
+import { ResponseType } from '../models/IResponseBuilder';
 
 /**
  * A package used to be passed to an instance of an IActionHandler.
@@ -12,7 +12,7 @@ export interface IActionHandlerPackage {
     app: DialogflowApp;
     /** An interface used to gather user settings */
     userInfo: UserInfo;
-    /** An interface used to gather external data about the customer as well as process and submit orders */
+    /** An interface used to interact with the stored data */
     source: ISource;
 
     // v2 support

@@ -6,7 +6,6 @@ import { IResponseBuilder, ResponseType } from '../models/IResponseBuilder';
 import { Logging } from '../models/logger';
 import { CheckLineHandler } from './checkLineHandler';
 
-/** Handle showing the status of the user's latest, open order */
 export class CustomerRemoveFromLineHandler extends RemoveFromLineHandler {
     user = UserType.customer;
     reply(responseBuilder: IResponseBuilder): Promise<ResponseType> {
@@ -14,7 +13,6 @@ export class CustomerRemoveFromLineHandler extends RemoveFromLineHandler {
     }
 }
 
-/** Handle showing the status of the user's latest, open order */
 export class CustomerWaitInLineHandler extends AddToLineHandler {
     user = UserType.customer;
     reply(responseBuilder: IResponseBuilder, phone: string): Promise<ResponseType> {

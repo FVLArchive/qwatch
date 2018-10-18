@@ -3,16 +3,9 @@ import { IResponseBuilder, ResponseType } from '../models/IResponseBuilder';
 import { BaseHandler } from './baseHandler';
 import { Logging } from '../models/logger';
 
-export const MAKE_ANOTHER_ORDER_KEY: string = 'make_another_order';
-
-/** Handle showing the status of the user's latest, open order */
 export abstract class RemoveFromLineHandler extends BaseHandler {
     protected abstract reply(responseBuilder: IResponseBuilder): Promise<ResponseType>;
-    /**
-     * Builds the appropriate response to a request to get order status
-     * @param responseBuilder an Instance of an IResponseBuilder used to build the response
-     * @returns Promise for a ResponseType.Normal (i.e. flow will continue following this response being sent)
-     */
+    /**remove a phone number from the queue of the current store the user is in*/
     buildResponse(responseBuilder: IResponseBuilder): Promise<ResponseType> {
         Logging.logger.log('RemoveFromLineHandler/buildResponse');
         return this.getPhoneNumber().then(phone => {
