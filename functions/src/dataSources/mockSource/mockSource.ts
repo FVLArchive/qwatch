@@ -1,5 +1,5 @@
 import { UserInfo } from '../../models/userInfo';
-import { ISource, Store, QueueItem } from './source';
+import { ISource, Store, QueueItem } from '../source/source';
 
 /**
  * Interface for a mock customer for the mockRestaurantSource
