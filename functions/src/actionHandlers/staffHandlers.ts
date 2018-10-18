@@ -59,16 +59,19 @@ export class StaffNextInLineHandler extends BaseHandler {
 
 export class StaffCheckLineHandler extends CheckLineHandler {
     user = UserType.staff;
-    reply(responseBuilder: IResponseBuilder): Promise<ResponseType> {
-        return this.package.source.getNewPosition().then(length => {
-            if (length === 0) {
+    reply(responseBuilder: IResponseBuilder, inLine: boolean, queueLength?: number, phone?: string): Promise<ResponseType> {
+        //if inLine is false, meaning the intent did not
+        if (inLine) {
+            responseBuilder.addSuggestions({ title: Messages.sgnNextCustomer() }, { title: Messages.sgnAddNewCustomer() });
+        } else {
+            if (queueLength === 0) {
                 responseBuilder.addMessages(Messages.noOneInLine());
             } else {
-                responseBuilder.addMessages(Messages.peopleInLine(length));
+                responseBuilder.addMessages(Messages.peopleInLine(queueLength));
                 responseBuilder.addSuggestions({ title: Messages.sgnNextCustomer() }, { title: Messages.sgnRemoveFromLine() });
             }
-            responseBuilder.addSuggestions({ title: Messages.sgnAddNewCustomer() });
-            return ResponseType.Normal;
-        });
+        }
+        responseBuilder.addSuggestions({ title: Messages.sgnAddNewCustomer() });
+        return Promise.resolve(ResponseType.Normal);
     }
 }

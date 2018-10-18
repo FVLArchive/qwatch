@@ -48,17 +48,25 @@ export class CustomerUpdatePhoneHandler extends BaseHandler {
 
 export class CustomerCheckLineHandler extends CheckLineHandler {
     user = UserType.customer;
-    reply(responseBuilder: IResponseBuilder, param: object = {}): Promise<ResponseType> {
-        return this.package.source.getNewPosition().then(length => {
-            if (length === 0) {
+    reply(responseBuilder: IResponseBuilder, inLine: boolean, queueLength?: number, phone?: string): Promise<ResponseType> {
+        if (inLine) {
+            responseBuilder.addSuggestions({ title: Messages.sgnUpdatePhone() });
+        }
+        // if customer is not in line, ask if they want to get in line
+        else {
+            if (queueLength === 0) {
                 responseBuilder.addMessages(Messages.comeToFittingRoom());
                 responseBuilder.addSuggestions({ title: Messages.sgnCheckLine() });
             } else {
-                this.package.app.setContext(WAIT_IN_LINE_CONTEXT, 2, param);
-                responseBuilder.addMessages(Messages.addInLine(length));
+                if (phone) {
+                    // put this into context so that phone number will not be required to re-enter
+                    // phone number is already in database
+                    this.package.app.setContext(WAIT_IN_LINE_CONTEXT, 2, { [PHONE_NUMBER_KEY]: phone });
+                }
+                responseBuilder.addMessages(Messages.addInLine(queueLength));
                 responseBuilder.addSuggestions({ title: Messages.sgnYes() }, { title: Messages.sgnNo() });
             }
-            return ResponseType.Normal;
-        });
+        }
+        return Promise.resolve(ResponseType.Normal);
     }
 }
