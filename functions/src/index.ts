@@ -30,7 +30,7 @@ enum AllowedRequestResult {
  * Determine whether or not the request should be processed.
  * We are using a basic access token that can be configured in the global settings to guard against crawlers and other unwanted clients
  */
-function allowRequest(request: Request, response: Response): Promise<AllowedRequestResult> {
+function allowRequest(request: Request): Promise<AllowedRequestResult> {
     if (request.headers.fulfillmentaccesstoken)
         return UserStateProviderFactory.createUserStateProvider('')
             .then(settings => settings.getOrDefaultGlobalData(ACCESS_TOKEN_KEY, DEFAULT_ACCESS_TOKEN))
@@ -58,7 +58,7 @@ export function processDialogflowFulfillment(
     return Logging.createLogger().then(logger => {
         const dialogFlowHandler = new DialogflowHandler();
         if (request.body.result) {
-            return allowRequest(request, response).then(result => {
+            return allowRequest(request).then(result => {
                 switch (result) {
                     case AllowedRequestResult.Continue:
                         return dialogFlowHandler
