@@ -9,8 +9,8 @@ import { CheckLineHandler } from './checkLineHandler';
 /** Handle showing the status of the user's latest, open order */
 export class CustomerRemoveFromLineHandler extends RemoveFromLineHandler {
     user = UserType.customer;
-    addSuggestions(responseBuilder: IResponseBuilder): void {
-        responseBuilder.addSuggestions({ title: Messages.sgnCheckLine() });
+    reply(responseBuilder: IResponseBuilder): Promise<ResponseType> {
+        return Promise.resolve(ResponseType.Normal);
     }
 }
 

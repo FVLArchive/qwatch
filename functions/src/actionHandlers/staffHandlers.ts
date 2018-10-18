@@ -9,13 +9,13 @@ import { Utility } from '../utility';
 
 export class StaffRemoveFromLineHandler extends RemoveFromLineHandler {
     user = UserType.staff;
-    addSuggestions(responseBuilder: IResponseBuilder): void {
+    reply(responseBuilder: IResponseBuilder): Promise<ResponseType> {
         responseBuilder.addSuggestions(
             { title: Messages.sgnNextCustomer() },
             { title: Messages.sgnAddNewCustomer() },
-            { title: Messages.sgnRemoveFromLine() },
-            { title: Messages.sgnCheckLine() }
+            { title: Messages.sgnRemoveFromLine() }
         );
+        return Promise.resolve(ResponseType.Normal);
     }
 }
 

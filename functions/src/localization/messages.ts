@@ -106,6 +106,10 @@ export class Messages /*implements IResponsesSource*/ {
         return 'Are you a customer or staff?';
     }
 
+    static noPhoneProvided(): string {
+        return 'There is no phone number available for lookup.';
+    }
+
     // action handler errors
 
     /** General error for when handling the request fails */
