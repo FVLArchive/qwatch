@@ -10,9 +10,9 @@ import { ResponseType } from '../models/IResponseBuilder';
 export interface IActionHandlerPackage {
     /** The instance of Dialogflow App that is used throughout the function call. Used with the V1 dialogflow API. */
     app: DialogflowApp;
-    /** An interface used to gather user settings */
+    /** An interface used to get/set user settings */
     userInfo: UserInfo;
-    /** An interface used to interact with the stored data */
+    /** An interface used to interact with the stored global data */
     source: ISource;
 
     // v2 support
