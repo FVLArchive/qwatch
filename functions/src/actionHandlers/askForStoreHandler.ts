@@ -4,7 +4,7 @@ import { Logging } from '../models/logger';
 import { Messages } from '../localization/messages';
 
 export class AskForStoreHandler extends BaseHandler {
-    /**Builds the appropriate response to suggest a list of stores */
+    /**Builds the appropriate response to suggest a list of stores, same thing happens on change store */
     buildResponse(responseBuilder: IResponseBuilder): Promise<ResponseType> {
         Logging.logger.log('AskForStoreHandler/buildResponse');
         let promise = Promise.resolve();
