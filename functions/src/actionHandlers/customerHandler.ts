@@ -19,11 +19,7 @@ export class CustomerWaitInLineHandler extends AddToLineHandler {
     user = UserType.customer;
     reply(responseBuilder: IResponseBuilder, phone: string): Promise<ResponseType> {
         responseBuilder.addMessages(Messages.notifyAction(phone));
-        responseBuilder.addSuggestions(
-            { title: Messages.sgnUpdatePhone() },
-            { title: Messages.sgnRemoveFromLine() },
-            { title: Messages.sgnCheckLine() }
-        );
+        responseBuilder.addSuggestions({ title: Messages.sgnUpdatePhone() });
         return Promise.resolve(ResponseType.Normal);
     }
 }

@@ -5,6 +5,7 @@ import { Logging } from '../models/logger';
 import { QueueItem } from '../dataSources/source/source';
 
 export abstract class AddToLineHandler extends BaseHandler {
+    // for replies specific to customer/staff
     protected abstract reply(responseBuilder: IResponseBuilder, param?: string): Promise<ResponseType>;
     /** Adds a customer to line by getting the queue from database and modify it */
     buildResponse(responseBuilder: IResponseBuilder): Promise<ResponseType> {
@@ -24,6 +25,7 @@ export abstract class AddToLineHandler extends BaseHandler {
                 if (this.user === UserType.customer) {
                     promise = this.package.userInfo.settings.setData(PHONE_NUMBER_KEY, phone);
                 }
+                responseBuilder.addSuggestions({ title: Messages.sgnRemoveFromLine() }, { title: Messages.sgnCheckLine() });
                 return promise.then(() => this.reply(responseBuilder, phone));
             });
         });

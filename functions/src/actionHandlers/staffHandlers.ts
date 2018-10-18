@@ -22,12 +22,7 @@ export class StaffRemoveFromLineHandler extends RemoveFromLineHandler {
 export class StaffAddToLineHandler extends AddToLineHandler {
     user = UserType.staff;
     reply(responseBuilder: IResponseBuilder): Promise<ResponseType> {
-        responseBuilder.addSuggestions(
-            { title: Messages.sgnNextCustomer() },
-            { title: Messages.sgnAddNewCustomer() },
-            { title: Messages.sgnRemoveFromLine() },
-            { title: Messages.sgnCheckLine() }
-        );
+        responseBuilder.addSuggestions({ title: Messages.sgnNextCustomer() }, { title: Messages.sgnAddNewCustomer() });
         return Promise.resolve(ResponseType.Normal);
     }
 }
