@@ -1,49 +1,54 @@
-import { DialogflowApp } from "actions-on-google";
-import { ISource } from "./dataSources/source/source";
-import { SourceFactory } from "./dataSources/source/sourceFactory";
-import { UserInfo } from "./models/userInfo";
-import { Messages } from "./localization/messages";
+import { DialogflowApp } from 'actions-on-google';
+import { ISource } from './dataSources/source/source';
+import { SourceFactory } from './dataSources/source/sourceFactory';
+import { UserInfo } from './models/userInfo';
+import { Messages } from './localization/messages';
 //Handlers
-import { IActionHandlerPackage, IActionHandler } from "./actionHandlers/IActionHandler";
-import { Logging } from "./models/logger";
-import { WelcomeHandler } from "./actionHandlers/welcomeHandler";
+import { IActionHandlerPackage, IActionHandler } from './actionHandlers/IActionHandler';
+import { Logging } from './models/logger';
+import { WelcomeHandler } from './actionHandlers/welcomeHandler';
 import {
     CustomerRemoveFromLineHandler,
     CustomerWaitInLineHandler,
     CustomerUpdatePhoneHandler,
     CustomerCheckLineHandler
-} from "./actionHandlers/customerHandler";
-import { StaffAddToLineHandler, StaffNextInLineHandler, StaffRemoveFromLineHandler, StaffCheckLineHandler } from "./actionHandlers/staffHandlers";
-import { SelectStoreHandler } from "./actionHandlers/selectStoreHandler";
-import { AskForStoreHandler } from "./actionHandlers/askForStoreHandler";
-import { NotificationPermissionHandler } from "./actionHandlers/notificationPermissionHandler";
+} from './actionHandlers/customerHandler';
+import {
+    StaffAddToLineHandler,
+    StaffNextInLineHandler,
+    StaffRemoveFromLineHandler,
+    StaffCheckLineHandler
+} from './actionHandlers/staffHandlers';
+import { SelectStoreHandler } from './actionHandlers/selectStoreHandler';
+import { AskForStoreHandler } from './actionHandlers/askForStoreHandler';
+import { NotificationPermissionHandler } from './actionHandlers/notificationPermissionHandler';
 
 export class ActionHandlers {
     /** A Map of handlers that are invoked by DialogflowApp when it receives an action string from an intent invocation. */
     static readonly handlers: Map<string, (app: DialogflowApp) => any> = new Map([
         // ['default', ActionHandlers.default],
-        ["input.welcome", ActionHandlers.welcome],
+        ['input.welcome', ActionHandlers.welcome],
         // ['input.unknown', ActionHandlers.unknownInput],
         // ['message.repeat', ActionHandlers.repeat],
         // customer
-        ["customer.checkLine", ActionHandlers.customerCheckLine],
-        ["customer.waitInLine", ActionHandlers.customerAddToLine],
-        ["customer.removeFromLine", ActionHandlers.customerRemoveFromLine],
-        ["customer.updatePhone", ActionHandlers.customerUpdatePhone],
+        ['customer.checkLine', ActionHandlers.customerCheckLine],
+        ['customer.waitInLine', ActionHandlers.customerAddToLine],
+        ['customer.removeFromLine', ActionHandlers.customerRemoveFromLine],
+        ['customer.updatePhone', ActionHandlers.customerUpdatePhone],
         // // sales
-        ["staff.addCustomerInLine", ActionHandlers.staffAddToLine],
-        ["staff.nextCustomer", ActionHandlers.staffNextCustomer],
-        ["staff.removeCustomerFromLine", ActionHandlers.staffRemoveFromLine],
-        ["staff.checkCurrentLine", ActionHandlers.staffCheckLine],
+        ['staff.addCustomerInLine', ActionHandlers.staffAddToLine],
+        ['staff.nextCustomer', ActionHandlers.staffNextCustomer],
+        ['staff.removeCustomerFromLine', ActionHandlers.staffRemoveFromLine],
+        ['staff.checkCurrentLine', ActionHandlers.staffCheckLine],
         //select identity
-        ["select.staff", ActionHandlers.askForStore],
-        ["select.customer", ActionHandlers.enableNotification],
+        ['select.staff', ActionHandlers.askForStore],
+        ['select.customer', ActionHandlers.enableNotification],
 
-        ["finish.push.setup", ActionHandlers.askForStore],
+        ['finish.push.setup', ActionHandlers.askForStore],
 
-        ["select.store", ActionHandlers.selectStore],
-        ["change.store", ActionHandlers.askForStore],
-        ["enable.notification", ActionHandlers.enableNotification]
+        ['select.store', ActionHandlers.selectStore],
+        ['change.store', ActionHandlers.askForStore],
+        ['enable.notification', ActionHandlers.enableNotification]
     ]);
 
     /**
@@ -52,7 +57,7 @@ export class ActionHandlers {
      */
     static getUserInfo(app: DialogflowApp): Promise<UserInfo> {
         const user = app.getUser();
-        return new UserInfo(user.userId, user.accessToken).init();
+        return new UserInfo(user.userId).init();
     }
 
     static getSource(userInfo: UserInfo): Promise<ISource> {
@@ -77,7 +82,7 @@ export class ActionHandlers {
             .then(pkg => actionHandler.init(pkg))
             .then(handler => handler.respond())
             .catch(err => {
-                Logging.logger.error("Handling action", err);
+                Logging.logger.error('Handling action', err);
                 app.tell(Messages.errorHandlingResponse());
                 // TODO: notify somebody
             });
