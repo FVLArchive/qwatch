@@ -1,14 +1,8 @@
 import { RichResponse, BasicCard } from 'actions-on-google/response-builder';
 import { DialogflowApp } from 'actions-on-google/dialogflow-app';
-import { OrderUpdate, Order, ActionPaymentTransactionConfig } from 'actions-on-google/transactions';
 import { ISimpleResponse, IOption, IResponseBuilder, ISuggestion, ResponseType } from './IResponseBuilder';
 import { Logging } from './logger';
 import { Utility } from '../utility';
-
-interface ITransactionDecision {
-    order: Order;
-    transactionConfig: ActionPaymentTransactionConfig;
-}
 
 /** Limits and specifications required by Google Assistant */
 const MAX_CHAT_BUBBLE = 2;
@@ -32,10 +26,6 @@ export class DefaultResponseBuilder implements IResponseBuilder {
     options: IOption[] = [];
     optionsTitle: string;
     suggestions: ISuggestion[] = [];
-    /** An order update storing the information required for Google's transaction API. */
-    orderUpdate: OrderUpdate;
-    /** The order proposal that will be presented to the user for deciding to purchase or not. */
-    transactionDecision: ITransactionDecision;
     /** Used as a separator when individual messages have to be combined due to message count restrictions */
     static messageDelimiter = '\n\n';
     /** Messages that will be stated by voice after all other messages have been read. These will only be heard on a screen-less device */
@@ -183,14 +173,6 @@ export class DefaultResponseBuilder implements IResponseBuilder {
     }
 
     /**
-     * Adds an order update to the list if one has been provided to the response builder
-     * @param richResponse The richResponse that the suggestions are going to be added to.
-     */
-    protected processOrderUpdate(richResponse: RichResponse): void {
-        if (this.orderUpdate) richResponse.addOrderUpdate(this.orderUpdate);
-    }
-
-    /**
      * Send v1 rich responses depending on how options are interpreted.
      * Follows Google's [recommendations]{@Link https://developers.google.com/actions/assistant/responses} for how different amounts of options should be displayed.
      * @param app           The DialogflowApp that will be used to create the list of options and submit the response.
@@ -269,17 +251,10 @@ export class DefaultResponseBuilder implements IResponseBuilder {
      * @param responseType Determines whether this should be the final message or not.
      */
     respondV1(app: DialogflowApp, responseType: ResponseType): Promise<void> {
-        // If there is a transaction decision present no other messages can be sent.
-        if (this.transactionDecision) {
-            app.askForTransactionDecision(this.transactionDecision.order, this.transactionDecision.transactionConfig);
-            return Promise.resolve();
-        }
-
         const richResponse = new RichResponse();
         this.processVoiceMessages(app);
         this.processV1SimpleResponses(richResponse);
         this.processV1Suggestions(richResponse);
-        this.processOrderUpdate(richResponse);
         return this.respondV1WithOptions(app, responseType, richResponse);
     }
 
